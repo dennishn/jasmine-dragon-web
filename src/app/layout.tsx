@@ -1,7 +1,8 @@
 import type { Metadata, Viewport } from "next";
-import "@/styles/globals.css";
+import "@/styles/theme.css";
 import { cn } from "@/styles/utils";
-import { geistSans, geistMono, inter, notoSerifHeading } from "@/styles/fonts";
+import { inter } from "@/styles/fonts";
+import { ThemeProvider } from "@/components/theme-provider";
 
 export const viewport: Viewport = {
     viewportFit: "cover",
@@ -16,17 +17,18 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
     return (
         <html
             lang="en"
-            className={cn(
-                "h-full",
-                "antialiased",
-                geistSans.variable,
-                geistMono.variable,
-                "font-sans",
-                inter.variable,
-                notoSerifHeading.variable,
-            )}
+            className={cn("h-full", "antialiased", "font-sans", inter.variable)}
+            suppressHydrationWarning
         >
-            <body className="flex min-h-full flex-col">{children}</body>
+            <body className="flex min-h-full flex-col">
+                <ThemeProvider
+                    attribute="class"
+                    defaultTheme="dark"
+                    disableTransitionOnChange
+                >
+                    {children}
+                </ThemeProvider>
+            </body>
         </html>
     );
 }

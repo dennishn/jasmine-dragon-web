@@ -6,15 +6,18 @@ import { buttonVariants } from "@/components/ui/button";
 import { getMe } from "@/lib/auth/session";
 import type { Player } from "@/lib/auth/types";
 import { cn } from "@/styles/utils";
+import { Logo } from "@/components/ui/logo";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 function AppNav({ player }: { player: Player }) {
     return (
         <header className="border-border border-b">
             <div className="mx-auto flex w-full max-w-5xl items-center gap-4 px-6 py-3">
                 <Link
-                    className="font-heading text-sm font-semibold tracking-tight"
+                    className="font-heading text-sm font-semibold tracking-tight inline-flex items-center gap-2"
                     href="/"
                 >
+                    <Logo className="text-primary size-10" />
                     Jasmine Dragon
                 </Link>
                 <nav className="flex flex-1 items-center gap-3 text-sm">
@@ -41,8 +44,7 @@ function AppNav({ player }: { player: Player }) {
                 </nav>
                 <div className="flex items-center gap-3 text-sm">
                     <span className="text-muted-foreground">
-                        {player.displayName}
-                        {player.isOfficer ? " · Officer" : null}
+                        Welcome, {player.displayName}
                     </span>
                     <a
                         className={cn(
@@ -52,6 +54,7 @@ function AppNav({ player }: { player: Player }) {
                     >
                         Log out
                     </a>
+                    <ThemeToggle />
                 </div>
             </div>
         </header>

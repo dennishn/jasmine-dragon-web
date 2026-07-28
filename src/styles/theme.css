@@ -1,0 +1,255 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+    --font-sans:
+        "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        "Helvetica Neue", Arial, sans-serif;
+}
+
+@theme inline {
+    --font-heading: var(--font-sans);
+    --font-sans: "Inter", system-ui, sans-serif;
+    --color-sidebar-ring: var(--sidebar-ring);
+    --color-sidebar-border: var(--sidebar-border);
+    --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+    --color-sidebar-accent: var(--sidebar-accent);
+    --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+    --color-sidebar-primary: var(--sidebar-primary);
+    --color-sidebar-foreground: var(--sidebar-foreground);
+    --color-sidebar: var(--sidebar);
+    --color-chart-5: var(--chart-5);
+    --color-chart-4: var(--chart-4);
+    --color-chart-3: var(--chart-3);
+    --color-chart-2: var(--chart-2);
+    --color-chart-1: var(--chart-1);
+    --color-ring: var(--ring);
+    --color-input: var(--input);
+    --color-border: var(--border);
+    --color-destructive: var(--destructive);
+    --color-accent-foreground: var(--accent-foreground);
+    --color-accent: var(--accent);
+    --color-muted-foreground: var(--muted-foreground);
+    --color-muted: var(--muted);
+    --color-secondary-foreground: var(--secondary-foreground);
+    --color-secondary: var(--secondary);
+    --color-primary-foreground: var(--primary-foreground);
+    --color-primary: var(--primary);
+    --color-popover-foreground: var(--popover-foreground);
+    --color-popover: var(--popover);
+    --color-card-foreground: var(--card-foreground);
+    --color-card: var(--card);
+    --color-foreground: var(--foreground);
+    --color-background: var(--background);
+    --radius-sm: calc(var(--radius) * 0.6);
+    --radius-md: calc(var(--radius) * 0.8);
+    --radius-lg: var(--radius);
+    --radius-xl: calc(var(--radius) * 1.4);
+    --radius-2xl: calc(var(--radius) * 1.8);
+    --radius-3xl: calc(var(--radius) * 2.2);
+    --radius-4xl: calc(var(--radius) * 2.6);
+    --font-mono: monospace;
+    --font-serif: Georgia, serif;
+    --radius: 0.5rem;
+    --tracking-tighter: calc(var(--tracking-normal) - 0.05em);
+    --tracking-tight: calc(var(--tracking-normal) - 0.025em);
+    --tracking-wide: calc(var(--tracking-normal) + 0.025em);
+    --tracking-wider: calc(var(--tracking-normal) + 0.05em);
+    --tracking-widest: calc(var(--tracking-normal) + 0.1em);
+    --tracking-normal: var(--tracking-normal);
+    --shadow-2xl: var(--shadow-2xl);
+    --shadow-xl: var(--shadow-xl);
+    --shadow-lg: var(--shadow-lg);
+    --shadow-md: var(--shadow-md);
+    --shadow: var(--shadow);
+    --shadow-sm: var(--shadow-sm);
+    --shadow-xs: var(--shadow-xs);
+    --shadow-2xs: var(--shadow-2xs);
+    --spacing: var(--spacing);
+    --letter-spacing: var(--letter-spacing);
+    --shadow-offset-y: var(--shadow-offset-y);
+    --shadow-offset-x: var(--shadow-offset-x);
+    --shadow-spread: var(--shadow-spread);
+    --shadow-blur: var(--shadow-blur);
+    --shadow-opacity: var(--shadow-opacity);
+    --color-shadow-color: var(--shadow-color);
+    --color-destructive-foreground: var(--destructive-foreground);
+    --color-class-death-knight: var(--class-death-knight);
+    --color-class-demon-hunter: var(--class-demon-hunter);
+    --color-class-druid: var(--class-druid);
+    --color-class-evoker: var(--class-evoker);
+    --color-class-hunter: var(--class-hunter);
+    --color-class-mage: var(--class-mage);
+    --color-class-monk: var(--class-monk);
+    --color-class-paladin: var(--class-paladin);
+    --color-class-priest: var(--class-priest);
+    --color-class-rogue: var(--class-rogue);
+    --color-class-shaman: var(--class-shaman);
+    --color-class-warlock: var(--class-warlock);
+    --color-class-warrior: var(--class-warrior);
+}
+
+:root {
+    --background: oklch(0.977 0.0067 115.7036);
+    --foreground: oklch(0.2631 0.0182 116.8502);
+    --card: oklch(1 0 0);
+    --card-foreground: oklch(0.2631 0.0182 116.8502);
+    --popover: oklch(1 0 0);
+    --popover-foreground: oklch(0.2631 0.0182 116.8502);
+    --primary: oklch(0.508 0.0958 122.3281);
+    --primary-foreground: oklch(1 0 0);
+    --secondary: oklch(0.709 0.1304 87.0898);
+    --secondary-foreground: oklch(1 0 0);
+    --muted: oklch(0.9579 0.012 111.7582);
+    --muted-foreground: oklch(0.5025 0.0264 115.4829);
+    --accent: oklch(0.9334 0.0253 111.7606);
+    --accent-foreground: oklch(0.2631 0.0182 116.8502);
+    --destructive: oklch(0.5054 0.1905 27.5181);
+    --border: oklch(0.9122 0.0254 111.7751);
+    --input: oklch(0.9122 0.0254 111.7751);
+    --ring: oklch(0.508 0.0958 122.3281);
+    --chart-1: oklch(0.508 0.0958 122.3281);
+    --chart-2: oklch(0.709 0.1304 87.0898);
+    --chart-3: oklch(0.6348 0.0974 119.0793);
+    --chart-4: oklch(0.8046 0.1393 87.6169);
+    --chart-5: oklch(0.7318 0.0699 119.1231);
+    --radius: 0.5rem;
+    --sidebar: oklch(0.9579 0.012 111.7582);
+    --sidebar-foreground: oklch(0.2631 0.0182 116.8502);
+    --sidebar-primary: oklch(0.508 0.0958 122.3281);
+    --sidebar-primary-foreground: oklch(1 0 0);
+    --sidebar-accent: oklch(0.9122 0.0254 111.7751);
+    --sidebar-accent-foreground: oklch(0.2631 0.0182 116.8502);
+    --sidebar-border: oklch(0.8632 0.034 114.4929);
+    --sidebar-ring: oklch(0.508 0.0958 122.3281);
+    --destructive-foreground: oklch(1 0 0);
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: monospace;
+    --shadow-color: #000000;
+    --shadow-opacity: 0;
+    --shadow-blur: 0px;
+    --shadow-spread: 0px;
+    --shadow-offset-x: 0px;
+    --shadow-offset-y: 0px;
+    --letter-spacing: 0em;
+    --spacing: 0.25rem;
+    --shadow-2xs: 0px 0px 0px 0px hsl(0 0% 0% / 0);
+    --shadow-xs: 0px 0px 0px 0px hsl(0 0% 0% / 0);
+    --shadow-sm:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 1px 2px -1px hsl(0 0% 0% / 0);
+    --shadow:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 1px 2px -1px hsl(0 0% 0% / 0);
+    --shadow-md:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 2px 4px -1px hsl(0 0% 0% / 0);
+    --shadow-lg:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 4px 6px -1px hsl(0 0% 0% / 0);
+    --shadow-xl:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 8px 10px -1px hsl(0 0% 0% / 0);
+    --shadow-2xl: 0px 0px 0px 0px hsl(0 0% 0% / 0);
+    --tracking-normal: 0em;
+    /* WoW class colors — light mode (darkened for contrast on light backgrounds) */
+    --class-death-knight: oklch(0.5316 0.1962 19.3137);
+    --class-demon-hunter: oklch(0.4509 0.1857 315.6643);
+    --class-druid: oklch(0.5959 0.1543 51.4809);
+    --class-evoker: oklch(0.4792 0.0743 176.3421);
+    --class-hunter: oklch(0.5696 0.1219 129.9363);
+    --class-mage: oklch(0.5981 0.103 228.2842);
+    --class-monk: oklch(0.6005 0.1454 156.0702);
+    --class-paladin: oklch(0.6193 0.1499 355.2691);
+    --class-priest: oklch(0.4495 0 0);
+    --class-rogue: oklch(0.7833 0.1662 105.0058);
+    --class-shaman: oklch(0.4613 0.1534 255.2767);
+    --class-warlock: oklch(0.5117 0.0989 295.0918);
+    --class-warrior: oklch(0.5614 0.0707 71.5974);
+}
+
+.dark {
+    --background: oklch(0.161 0.0083 118.7543);
+    --foreground: oklch(0.9122 0.0254 111.7751);
+    --card: oklch(0.2043 0.0138 120.5803);
+    --card-foreground: oklch(0.9122 0.0254 111.7751);
+    --popover: oklch(0.161 0.0083 118.7543);
+    --popover-foreground: oklch(0.9122 0.0254 111.7751);
+    --primary: oklch(0.709 0.1304 87.0898);
+    --primary-foreground: oklch(0.161 0.0083 118.7543);
+    --secondary: oklch(0.508 0.0958 122.3281);
+    --secondary-foreground: oklch(1 0 0);
+    --muted: oklch(0.2297 0.0169 117.9273);
+    --muted-foreground: oklch(0.7004 0.0497 116.8869);
+    --accent: oklch(0.2631 0.0182 116.8502);
+    --accent-foreground: oklch(0.9122 0.0254 111.7751);
+    --destructive: oklch(0.3958 0.1331 25.723);
+    --border: oklch(0.2631 0.0182 116.8502);
+    --input: oklch(0.2631 0.0182 116.8502);
+    --ring: oklch(0.709 0.1304 87.0898);
+    --chart-1: oklch(0.709 0.1304 87.0898);
+    --chart-2: oklch(0.508 0.0958 122.3281);
+    --chart-3: oklch(0.8046 0.1393 87.6169);
+    --chart-4: oklch(0.6348 0.0974 119.0793);
+    --chart-5: oklch(0.363 0.0576 118.2139);
+    --sidebar: oklch(0.161 0.0083 118.7543);
+    --sidebar-foreground: oklch(0.9122 0.0254 111.7751);
+    --sidebar-primary: oklch(0.709 0.1304 87.0898);
+    --sidebar-primary-foreground: oklch(0.161 0.0083 118.7543);
+    --sidebar-accent: oklch(0.2631 0.0182 116.8502);
+    --sidebar-accent-foreground: oklch(0.9122 0.0254 111.7751);
+    --sidebar-border: oklch(0.2631 0.0182 116.8502);
+    --sidebar-ring: oklch(0.709 0.1304 87.0898);
+    --destructive-foreground: oklch(1 0 0);
+    --radius: 0.5rem;
+    --font-sans: "Inter", system-ui, sans-serif;
+    --font-serif: Georgia, serif;
+    --font-mono: monospace;
+    --shadow-color: #000000;
+    --shadow-opacity: 0;
+    --shadow-blur: 0px;
+    --shadow-spread: 0px;
+    --shadow-offset-x: 0px;
+    --shadow-offset-y: 0px;
+    --letter-spacing: 0em;
+    --spacing: 0.25rem;
+    --shadow-2xs: 0px 0px 0px 0px hsl(0 0% 0% / 0);
+    --shadow-xs: 0px 0px 0px 0px hsl(0 0% 0% / 0);
+    --shadow-sm:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 1px 2px -1px hsl(0 0% 0% / 0);
+    --shadow:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 1px 2px -1px hsl(0 0% 0% / 0);
+    --shadow-md:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 2px 4px -1px hsl(0 0% 0% / 0);
+    --shadow-lg:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 4px 6px -1px hsl(0 0% 0% / 0);
+    --shadow-xl:
+        0px 0px 0px 0px hsl(0 0% 0% / 0), 0px 8px 10px -1px hsl(0 0% 0% / 0);
+    --shadow-2xl: 0px 0px 0px 0px hsl(0 0% 0% / 0);
+    /* WoW class colors — dark mode (canonical Blizzard values) */
+    --class-death-knight: oklch(0.5316 0.1962 19.3137);
+    --class-demon-hunter: oklch(0.5507 0.2299 316.0046);
+    --class-druid: oklch(0.7276 0.1868 51.2684);
+    --class-evoker: oklch(0.6017 0.0942 176.4461);
+    --class-hunter: oklch(0.8188 0.1328 127.8488);
+    --class-mage: oklch(0.7989 0.1057 224.3375);
+    --class-monk: oklch(0.8786 0.216 155.299);
+    --class-paladin: oklch(0.765 0.1373 353.1137);
+    --class-priest: oklch(1 0 0);
+    --class-rogue: oklch(0.9522 0.1592 105.2025);
+    --class-shaman: oklch(0.5571 0.1882 255.7147);
+    --class-warlock: oklch(0.6508 0.1054 294.9551);
+    --class-warrior: oklch(0.722 0.0801 67.8895);
+}
+
+@layer base {
+    * {
+        @apply border-border outline-ring/50;
+    }
+    body {
+        @apply bg-background text-foreground;
+        letter-spacing: var(--tracking-normal);
+    }
+    html {
+        @apply font-sans;
+    }
+}
