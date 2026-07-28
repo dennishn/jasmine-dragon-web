@@ -1,0 +1,21 @@
+{
+  "mcpServers": {
+    "motion": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "https://api.motion.dev/registry.tgz?package=motion-studio-mcp&version=6.1.0"
+      ],
+      "env": {
+        "TOKEN": "c66bc7d57f5b6a95430593003ee3c4265ace2954eccf5f769435ba75fe301b8f"
+      }
+    },
+    "next-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "next-devtools-mcp@latest"
+      ]
+    }
+  }
+}
