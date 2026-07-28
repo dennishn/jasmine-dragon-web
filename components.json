@@ -5,7 +5,7 @@
     "tsx": true,
     "tailwind": {
         "config": "",
-        "css": "src/app/globals.css",
+        "css": "src/styles/globals.css",
         "baseColor": "olive",
         "cssVariables": true,
         "prefix": ""
@@ -14,9 +14,9 @@
     "rtl": false,
     "aliases": {
         "components": "@/components",
-        "utils": "@/lib/utils",
+        "utils": "@/styles/utils",
         "ui": "@/components/ui",
-        "lib": "@/lib",
+        "lib": "@/styles",
         "hooks": "@/hooks"
     },
     "menuColor": "default",
