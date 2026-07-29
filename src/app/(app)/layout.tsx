@@ -4,7 +4,10 @@ import { Logo } from "@/components/ui/logo";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LogoutButton } from "@/features/user/components/logout-button";
 import { logoutUser } from "@/features/user/user-actions";
-import { CurrentUserAvatar } from "@/features/user/components/current-user-avatar";
+import {
+    UserGreeting,
+    UserGreetingSkeleton,
+} from "@/features/user/components/user-greeting";
 
 function AppNav() {
     return (
@@ -18,7 +21,9 @@ function AppNav() {
                     Jasmine Dragon
                 </Link>
                 <div className="flex items-center gap-3 text-sm">
-                    <CurrentUserAvatar />
+                    <Suspense fallback={<UserGreetingSkeleton />}>
+                        <UserGreeting />
+                    </Suspense>
                     <form action={logoutUser}>
                         <LogoutButton />
                     </form>
