@@ -15,7 +15,9 @@ const AdminLoginPage = () => {
                     <h1 className="text-3xl font-bold">Jasmine Dragon</h1>
                 </div>
                 <div className="flex-1">
-                    <AdminSignInForm />
+                    <Suspense>
+                        <AdminSignInForm />
+                    </Suspense>
                 </div>
             </div>
         </div>
