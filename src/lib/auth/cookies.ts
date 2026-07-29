@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 
 import { ACCESS_TOKEN_COOKIE } from "@/lib/auth/config";
 
-const COOKIE_MAX_AGE_SECONDS = 12 * 60 * 60;
+const COOKIE_MAX_AGE_SECONDS = 12 * 60 * 60; // 12 hours;
 
 export async function getAccessToken(): Promise<string | undefined> {
     const cookieStore = await cookies();

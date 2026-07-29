@@ -3,6 +3,7 @@ import "@/styles/theme.css";
 import { cn } from "@/styles/utils";
 import { inter } from "@/styles/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
+import { TooltipProvider } from "@/components/ui/tooltip";
 
 export const viewport: Viewport = {
     viewportFit: "cover",
@@ -26,7 +27,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
                     defaultTheme="dark"
                     disableTransitionOnChange
                 >
-                    {children}
+                    <TooltipProvider>{children}</TooltipProvider>
                 </ThemeProvider>
             </body>
         </html>

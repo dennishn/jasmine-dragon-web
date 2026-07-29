@@ -8,9 +8,13 @@ export function proxy(request: NextRequest) {
 
     // Auth gate: redirect unauthed page visits to /login.
     // /login itself is excluded so the form can render.
-    if (pathname !== "/login" && !isAuthed) {
+    if (pathname === "/auth/admin" && !isAuthed) {
+        return NextResponse.next();
+    }
+
+    if (pathname !== "/auth" && !isAuthed) {
         const url = request.nextUrl.clone();
-        url.pathname = "/login";
+        url.pathname = "/auth";
         return NextResponse.redirect(url);
     }
 
