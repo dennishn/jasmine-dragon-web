@@ -1,11 +1,11 @@
 "use server";
 
 import { zExchangeBootstrapAdminTokenBody } from "@/lib/api/__generated/openapi.ts/zod.gen";
-import { exchangeBootstrapAdminToken } from "@/lib/api/__generated/openapi.ts/sdk.gen";
+import { exchangeBootstrapAdminToken as sdkExchangeBootstrapAdminToken } from "@/lib/api/__generated/openapi.ts/sdk.gen";
+import { setAccessToken } from "@/lib/auth/cookies";
 import { redirect } from "next/navigation";
-import { client } from "@/lib/api/__generated/openapi.ts/client.gen";
 
-const signInAdmin = async (formData: FormData) => {
+const exchangeBootstrapAdminToken = async (formData: FormData) => {
     const parsed = zExchangeBootstrapAdminTokenBody.safeParse({
         token: formData.get("token"),
     });
@@ -16,10 +16,8 @@ const signInAdmin = async (formData: FormData) => {
 
     const token = parsed.data.token;
 
-    let bearerToken: string;
-
     try {
-        const { data, error } = await exchangeBootstrapAdminToken({
+        const { data, error } = await sdkExchangeBootstrapAdminToken({
             body: { token },
         });
 
@@ -30,17 +28,12 @@ const signInAdmin = async (formData: FormData) => {
             };
         }
 
-        bearerToken = data.data.accessToken;
+        await setAccessToken(data.data.accessToken, data.data.expiresAt);
     } catch {
         return { error: "Failed to exchange token", ok: false as const };
     }
 
-    // Update SDK client to pass bearer tokens for future requests
-    client.setConfig({
-        auth: bearerToken,
-    });
-
     redirect("/");
 };
 
-export { signInAdmin };
+export { exchangeBootstrapAdminToken };

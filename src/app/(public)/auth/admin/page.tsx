@@ -1,6 +1,6 @@
 import { Suspense } from "react";
 import { Logo } from "@/components/ui/logo";
-import { AdminSignInForm } from "@/features/admin-user/components/admin-sign-in-form";
+import { AdminSignInForm } from "@/features/admin/components/admin-sign-in-form";
 import { RedirectIfAuthenticated } from "@/lib/auth/redirect-if-authenticated";
 
 const AdminLoginPage = () => {

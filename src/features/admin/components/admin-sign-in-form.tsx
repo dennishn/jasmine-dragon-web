@@ -1,7 +1,7 @@
 "use client";
 
 import { Suspense, useActionState } from "react";
-import { signInAdmin } from "../admin-user-actions";
+import { exchangeBootstrapAdminToken } from "../admin-actions";
 import {
     FieldGroup,
     FieldSet,
@@ -20,7 +20,7 @@ const action = async (
     _prev: FormState,
     formData: FormData,
 ): Promise<FormState> => {
-    const result = await signInAdmin(formData);
+    const result = await exchangeBootstrapAdminToken(formData);
 
     if (!result.ok) {
         return { error: result.error };

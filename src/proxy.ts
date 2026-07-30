@@ -6,13 +6,12 @@ export function proxy(request: NextRequest) {
     const { pathname } = request.nextUrl;
     const isAuthed = request.cookies.has(ACCESS_TOKEN_COOKIE);
 
-    // Auth gate: redirect unauthed page visits to /login.
-    // /login itself is excluded so the form can render.
-    if (pathname === "/auth/admin" && !isAuthed) {
+    // Public auth routes (login, Discord start/callback, admin break-glass).
+    if (pathname.startsWith("/auth")) {
         return NextResponse.next();
     }
 
-    if (pathname !== "/auth" && !isAuthed) {
+    if (!isAuthed) {
         const url = request.nextUrl.clone();
         url.pathname = "/auth";
         return NextResponse.redirect(url);

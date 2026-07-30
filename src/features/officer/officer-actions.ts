@@ -1,24 +1,16 @@
-"use server";
-
 import {
-    createCharacter,
-    logout,
-    updateOwnPlayer,
+    updatePlayer as sdkUpdatePlayer,
+    updateCharacter as sdkUpdateCharacter,
+    verifyCharacter as sdkVerifyCharacter,
 } from "@/lib/api/__generated/openapi.ts/sdk.gen";
-import { clearAccessToken } from "@/lib/auth/cookies";
-import { redirect } from "next/navigation";
 import {
-    zCharacterRequest,
+    zUpdateCharacterBody,
     zUpdatePlayerBody,
+    zVerifyCharacterBody,
 } from "@/lib/api/__generated/openapi.ts/zod.gen";
-import type {
-    CharacterProfile,
-    PlayerProfile,
-} from "@/lib/api/__generated/openapi.ts/types.gen";
+import { updateTag } from "next/cache";
 
-const updateUser = async (data: FormData) => {
-    "use cache: private";
-
+const updatePlayer = async (userId: string, data: FormData) => {
     const parsed = zUpdatePlayerBody.safeParse({
         displayName: data.get("displayName"),
         teamIds: data.get("teamIds"),
@@ -33,10 +25,11 @@ const updateUser = async (data: FormData) => {
     const teamIds = parsed.data.teamIds;
     const timeZone = parsed.data.timeZone;
 
-    let player: PlayerProfile;
-
     try {
-        const { data, error } = await updateOwnPlayer({
+        const { data, error } = await sdkUpdatePlayer({
+            path: {
+                userId,
+            },
             body: {
                 displayName,
                 teamIds,
@@ -51,18 +44,16 @@ const updateUser = async (data: FormData) => {
             };
         }
 
-        player = data.data;
+        updateTag(`player:${userId}`);
+
+        return { ok: true as const, data: data?.data };
     } catch {
         return { error: "Failed to update user", ok: false as const };
     }
-
-    return { ok: true as const, data: player };
 };
 
-const createCharacterClaim = async (data: FormData) => {
-    "use cache: private";
-
-    const parsed = zCharacterRequest.safeParse({
+const updateCharacter = async (characterId: string, data: FormData) => {
+    const parsed = zUpdateCharacterBody.safeParse({
         name: data.get("name"),
         realm: data.get("realm"),
         region: data.get("region"),
@@ -86,10 +77,11 @@ const createCharacterClaim = async (data: FormData) => {
     const teamIds = parsed.data.teamIds;
     const isMain = parsed.data.isMain;
 
-    let character: CharacterProfile;
-
     try {
-        const { data, error } = await createCharacter({
+        const { data, error } = await sdkUpdateCharacter({
+            path: {
+                characterId,
+            },
             body: {
                 name,
                 realm,
@@ -104,32 +96,54 @@ const createCharacterClaim = async (data: FormData) => {
 
         if (error?.error || !data?.data) {
             return {
-                error:
-                    error?.error?.message ?? "Failed to create character claim",
+                error: error?.error?.message ?? "Failed to update character",
                 ok: false as const,
             };
         }
 
-        character = data.data;
-    } catch {
-        return {
-            error: "Failed to create character claim",
-            ok: false as const,
-        };
-    }
+        updateTag(`character:${characterId}`);
 
-    return { ok: true as const, data: character };
+        return { ok: true as const, data: data?.data };
+    } catch {
+        return { error: "Failed to update character", ok: false as const };
+    }
 };
 
-const logoutUser = async () => {
+const verifyCharacter = async (characterId: string, data: FormData) => {
+    const parsed = zVerifyCharacterBody.safeParse({
+        approved: data.get("approved"),
+        note: data.get("note"),
+    });
+
+    if (!parsed.success) {
+        return { error: parsed.error.issues[0].message, ok: false as const };
+    }
+
+    const approved = parsed.data.approved;
+    const note = parsed.data.note;
+
     try {
-        await logout();
-    } catch {
-        // Clear local session even if the API call fails.
-    }
+        const { data, error } = await sdkVerifyCharacter({
+            path: {
+                characterId,
+            },
+            body: {
+                approved,
+                note,
+            },
+        });
 
-    await clearAccessToken();
-    redirect("/auth");
+        if (error?.error || !data?.data) {
+            return {
+                error: error?.error?.message ?? "Failed to verify character",
+                ok: false as const,
+            };
+        }
+
+        return { ok: true as const, data: data?.data };
+    } catch {
+        return { error: "Failed to verify character", ok: false as const };
+    }
 };
 
-export { updateUser, createCharacterClaim, logoutUser };
+export { updatePlayer, updateCharacter, verifyCharacter };

@@ -6,7 +6,7 @@ const RedirectIfAuthenticated = async () => {
     const store = await cookies();
 
     if (store.has(ACCESS_TOKEN_COOKIE)) {
-        redirect("/admin");
+        redirect("/");
     }
 
     return null;
