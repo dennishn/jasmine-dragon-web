@@ -1,6 +1,6 @@
 "use client";
 
-import { useActionState } from "react";
+import { Suspense, useActionState } from "react";
 import { signInAdmin } from "../admin-user-actions";
 import {
     FieldGroup,
@@ -10,10 +10,9 @@ import {
     FieldContent,
     FieldError,
 } from "@/components/ui/field";
-import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Spinner } from "@/components/ui/spinner";
-import { useSearchParams } from "next/navigation";
+import { TokenInput, TokenInputGhost } from "./token-input";
 
 type FormState = { error?: string } | null;
 
@@ -32,8 +31,6 @@ const action = async (
 
 const AdminSignInForm = () => {
     const [state, formAction, isPending] = useActionState(action, null);
-    const searchParams = useSearchParams();
-    const token = searchParams.get("token");
 
     return (
         <form action={formAction} className="flex flex-col gap-4">
@@ -42,14 +39,15 @@ const AdminSignInForm = () => {
                     <FieldGroup>
                         <Field>
                             <FieldLabel htmlFor="token">Token</FieldLabel>
-                            <Input
-                                type="text"
-                                id="token"
-                                name="token"
-                                required
-                                autoComplete="off"
-                                defaultValue={token ?? undefined}
-                            />
+                            <Suspense fallback={<TokenInputGhost />}>
+                                <TokenInput
+                                    type="text"
+                                    id="token"
+                                    name="token"
+                                    required
+                                    autoComplete="off"
+                                />
+                            </Suspense>
                         </Field>
                     </FieldGroup>
                 </FieldSet>
