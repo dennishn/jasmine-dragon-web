@@ -7,7 +7,7 @@ export function proxy(request: NextRequest) {
     const isAuthed = request.cookies.has(ACCESS_TOKEN_COOKIE);
 
     // Public auth routes (login, Discord start/callback, admin break-glass).
-    if (pathname.startsWith("/auth")) {
+    if (pathname.startsWith("/auth") || pathname.startsWith("/playground")) {
         return NextResponse.next();
     }
 

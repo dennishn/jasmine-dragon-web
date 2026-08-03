@@ -4,6 +4,7 @@ import { cn } from "@/styles/utils";
 import { inter } from "@/styles/fonts";
 import { ThemeProvider } from "@/components/theme-provider";
 import { TooltipProvider } from "@/components/ui/tooltip";
+import WowheadTooltipProvider from "@/lib/wowhead/wowhead-tooltip-provider";
 
 export const viewport: Viewport = {
     viewportFit: "cover",
@@ -21,6 +22,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             className={cn("h-full", "antialiased", "font-sans", inter.variable)}
             suppressHydrationWarning
         >
+            <WowheadTooltipProvider />
             <body className="flex min-h-full flex-col">
                 <ThemeProvider
                     attribute="class"

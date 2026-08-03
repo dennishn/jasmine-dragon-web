@@ -8,6 +8,10 @@
     --font-sans:
         "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
         "Helvetica Neue", Arial, sans-serif;
+    --icon-size-tiny: 20px;
+    --icon-size-small: 26px;
+    --icon-size-medium: 44px;
+    --icon-size-large: 68px;
 }
 
 @theme inline {
@@ -252,4 +256,15 @@
     html {
         @apply font-sans;
     }
+}
+
+@utility icon-* {
+    width: --value(--icon-size-*);
+    height: --value(--icon-size-*);
+}
+
+/* Spacer sits outside the <a> (Wowhead mutates anchor children).
+   Hide it once the real icon is injected into the sibling link. */
+[data-wh-tooltip]:has(> a[data-wh-icon-added="true"]) > [data-wh-icon-slot] {
+    display: none;
 }
