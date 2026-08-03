@@ -3,12 +3,7 @@ import { WowheadTooltip } from "@/lib/wowhead/wowhead-tooltip";
 export default function WowheadPage() {
     return (
         <div className="flex flex-col gap-4 p-8">
-            <h1>Wowhead</h1>
-            <p className="text-muted-foreground max-w-prose text-sm">
-                Item names are known at render time. Icons reserve space
-                in-flow; rarity color transitions in when Wowhead wires the
-                link.
-            </p>
+            <h1>Wowhead Tooltips</h1>
             <div className="flex flex-col gap-3">
                 <WowheadTooltip itemId={32451} iconSize="tiny">
                     Gladiator&apos;s Salvation

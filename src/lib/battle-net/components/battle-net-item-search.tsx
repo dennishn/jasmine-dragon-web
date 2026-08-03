@@ -19,7 +19,6 @@ import {
     ComboboxList,
     ComboboxStatus,
 } from "@/components/ui/combobox";
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
 import { Spinner } from "@/components/ui/spinner";
 import {
     type BattleNetItemSearchHit,
@@ -229,88 +228,75 @@ function BattleNetItemSearch({
     const emptyMessage = getEmptyMessage();
 
     return (
-        <Field className="max-w-md">
-            <FieldLabel htmlFor={inputId}>Item</FieldLabel>
-            <Combobox
-                items={items}
-                value={selectedValue}
-                itemToStringLabel={(item) => item.name}
-                isItemEqualToValue={(item, value) => item.id === value.id}
-                filter={null}
-                autoHighlight
-                onOpenChangeComplete={(open) => {
-                    if (!open && selectedValue) {
-                        setSearchResults([selectedValue]);
+        <Combobox
+            items={items}
+            value={selectedValue}
+            itemToStringLabel={(item) => item.name}
+            isItemEqualToValue={(item, value) => item.id === value.id}
+            filter={null}
+            autoHighlight
+            onOpenChangeComplete={(open) => {
+                if (!open && selectedValue) {
+                    setSearchResults([selectedValue]);
+                }
+            }}
+            onValueChange={(next) => {
+                setSelectedValue(next);
+                onValueChange?.(next);
+                setSearchValue("");
+                setError(null);
+                if (next) {
+                    // eslint-disable-next-line no-console -- intentional playground/debug logging
+                    console.log("[battle-net] selected item", next);
+                }
+            }}
+            onInputValueChange={(nextSearchValue, { reason }) => {
+                setSearchValue(nextSearchValue);
+
+                if (nextSearchValue === "") {
+                    abortRef.current?.abort();
+                    if (debounceRef.current) {
+                        clearTimeout(debounceRef.current);
                     }
-                }}
-                onValueChange={(next) => {
-                    setSelectedValue(next);
-                    onValueChange?.(next);
-                    setSearchValue("");
+                    setSearchResults([]);
                     setError(null);
-                    if (next) {
-                        // eslint-disable-next-line no-console -- intentional playground/debug logging
-                        console.log("[battle-net] selected item", next);
-                    }
-                }}
-                onInputValueChange={(nextSearchValue, { reason }) => {
-                    setSearchValue(nextSearchValue);
+                    setIsDebouncing(false);
+                    return;
+                }
 
-                    if (nextSearchValue === "") {
-                        abortRef.current?.abort();
-                        if (debounceRef.current) {
-                            clearTimeout(debounceRef.current);
-                        }
-                        setSearchResults([]);
-                        setError(null);
-                        setIsDebouncing(false);
-                        return;
-                    }
+                if (reason === "item-press") {
+                    return;
+                }
 
-                    if (reason === "item-press") {
-                        return;
-                    }
-
-                    scheduleSearch(nextSearchValue.trim());
-                }}
-            >
-                <ComboboxInput
-                    id={inputId}
-                    placeholder={placeholder}
-                    showClear
-                    className="w-full"
-                />
-                <ComboboxContent aria-busy={isSearching || undefined}>
-                    <ComboboxStatus>{status}</ComboboxStatus>
-                    <ComboboxEmpty>{emptyMessage}</ComboboxEmpty>
-                    <ComboboxList>
-                        {(item: BattleNetItemSearchHit) => (
-                            <ComboboxItem key={item.id} value={item}>
-                                <WowheadTooltip
-                                    itemId={item.id}
-                                    iconSize="tiny"
-                                    onClick={(event) => {
-                                        event.preventDefault();
-                                    }}
-                                >
-                                    {item.name}
-                                </WowheadTooltip>
-                            </ComboboxItem>
-                        )}
-                    </ComboboxList>
-                </ComboboxContent>
-            </Combobox>
-            <FieldDescription>
-                Classic EU · English · results logged to the browser console
-            </FieldDescription>
-            {selectedValue ? (
-                <div className="pt-2">
-                    <WowheadTooltip itemId={selectedValue.id} iconSize="medium">
-                        {selectedValue.name}
-                    </WowheadTooltip>
-                </div>
-            ) : null}
-        </Field>
+                scheduleSearch(nextSearchValue.trim());
+            }}
+        >
+            <ComboboxInput
+                id={inputId}
+                placeholder={placeholder}
+                showClear
+                className="w-full"
+            />
+            <ComboboxContent aria-busy={isSearching || undefined}>
+                <ComboboxStatus>{status}</ComboboxStatus>
+                <ComboboxEmpty>{emptyMessage}</ComboboxEmpty>
+                <ComboboxList>
+                    {(item: BattleNetItemSearchHit) => (
+                        <ComboboxItem key={item.id} value={item}>
+                            <WowheadTooltip
+                                itemId={item.id}
+                                iconSize="tiny"
+                                onClick={(event) => {
+                                    event.preventDefault();
+                                }}
+                            >
+                                {item.name}
+                            </WowheadTooltip>
+                        </ComboboxItem>
+                    )}
+                </ComboboxList>
+            </ComboboxContent>
+        </Combobox>
     );
 }
 

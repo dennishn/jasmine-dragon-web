@@ -3,7 +3,26 @@ import { Logo } from "@/components/ui/logo";
 import { DiscordSignInButton } from "@/features/discord/components/discord-sign-in-button";
 import { RedirectIfAuthenticated } from "@/lib/auth/redirect-if-authenticated";
 
-const LoginPage = () => {
+type LoginSearchParams = Promise<{
+    error?: string;
+}>;
+
+const AuthErrorMessage = async ({
+    searchParams,
+}: {
+    searchParams: LoginSearchParams;
+}) => {
+    const params = await searchParams;
+    const error = params.error;
+
+    if (!error) {
+        return null;
+    }
+
+    return <p className="text-destructive text-center text-sm">{error}</p>;
+};
+
+const LoginPage = ({ searchParams }: { searchParams: LoginSearchParams }) => {
     return (
         <div className="flex min-h-screen items-center justify-center px-4">
             <Suspense>
@@ -15,6 +34,9 @@ const LoginPage = () => {
                     <h1 className="text-3xl font-bold">Jasmine Dragon</h1>
                 </div>
                 <div className="flex flex-1 flex-col gap-3">
+                    <Suspense>
+                        <AuthErrorMessage searchParams={searchParams} />
+                    </Suspense>
                     <DiscordSignInButton />
                     <p className="text-muted-foreground text-center text-xs">
                         Officers and players sign in with Discord. Your session
