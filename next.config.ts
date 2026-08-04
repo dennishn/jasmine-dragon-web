@@ -8,7 +8,6 @@ const nextConfig: NextConfig = {
     cacheComponents: true,
     partialPrefetching: true,
     experimental: {
-        useTypeScriptCli: true,
         typedEnv: true,
         inlineCss: true,
         useCache: true,
@@ -17,6 +16,9 @@ const nextConfig: NextConfig = {
     },
     logging: {
         browserToTerminal: true,
+    },
+    devIndicators: {
+        position: "bottom-right",
     },
 };
 

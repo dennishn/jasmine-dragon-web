@@ -1,13 +1,18 @@
+import { Suspense } from "react";
+import { UserDebug } from "@/features/user/components/user-debug";
+import { DiscordAvatar } from "@/features/user/components/discord-avatar";
+import { MeShell } from "./shell";
+
 export default function MePage() {
     return (
-        <main className="space-y-2">
-            <h1 className="font-heading text-2xl font-semibold tracking-tight">
-                Me
-            </h1>
-            <p className="text-muted-foreground text-sm">
-                Profile shell. Character claims and account loot will land here
-                later.
-            </p>
-        </main>
+        <MeShell>
+            <div className="flex flex-col items-center justify-center gap-4 h-full">
+                <h1 className="text-2xl font-bold">My Profile</h1>
+                <Suspense fallback={<div>Loading...</div>}>
+                    <DiscordAvatar />
+                    <UserDebug />
+                </Suspense>
+            </div>
+        </MeShell>
     );
 }

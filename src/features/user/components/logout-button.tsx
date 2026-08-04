@@ -4,6 +4,7 @@ import type { ComponentProps } from "react";
 import { Button } from "@/components/ui/button";
 import { useFormStatus } from "react-dom";
 import { Spinner } from "@/components/ui/spinner";
+import { LogOutIcon } from "lucide-react";
 
 const LogoutButton = (props: ComponentProps<typeof Button>) => {
     const { pending } = useFormStatus();
@@ -13,11 +14,11 @@ const LogoutButton = (props: ComponentProps<typeof Button>) => {
             type="submit"
             disabled={pending}
             variant="outline"
-            size="sm"
+            size="icon"
             {...props}
         >
             {pending && <Spinner data-icon="inline-start" />}
-            Log out
+            <LogOutIcon className="size-4" />
         </Button>
     );
 };

@@ -19,7 +19,9 @@ const LOOT_MODE = {
 const TEAMS = {
     TEAM_JASMINE: "team-jasmine",
     TEAM_DRAGON: "team-dragon",
-};
+} as const;
+
+type Team = (typeof TEAMS)[keyof typeof TEAMS];
 
 const AUTHENTICATION_PROVIDER = {
     DISCORD: "DISCORD",
@@ -62,3 +64,4 @@ export {
     SIGNUP_STATUS,
     LOOT_AWARD_STATUS,
 };
+export type { Team };
