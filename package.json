@@ -4,7 +4,7 @@
     "private": true,
     "type": "module",
     "scripts": {
-        "dev": "next dev",
+        "dev": "next dev --port 3005",
         "build": "next build",
         "start": "next start",
         "lint": "eslint --fix .",
@@ -49,6 +49,6 @@
         "prettier": "^3",
         "prettier-plugin-tailwindcss": "^0.7.1",
         "tailwindcss": "^4",
-        "typescript": "^5"
+        "typescript": "^7.0.2"
     }
 }
